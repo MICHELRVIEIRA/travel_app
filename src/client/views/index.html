@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Michel Roman Vieira">
+        <meta name="description" content="Travel planning app">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Travel App</title>
+        <link rel="stylesheet" href="/travel_app/src/client/styles/style.css">
+    </head>
+
+    <body>
+        <header>
+            <h1>Travel Planner</h1>
+        </header>
+        <main>
+            <section class="search_travel">
+                <h2>Search destiny</h2>
+                <form>
+                    <div class="search_local_dates">
+                        <div class="search_destiny">
+                            <label for="search_destiny">Destiny</label>
+                            <input type="text" name="search_destiny" id="search_destiny">
+                        </div>
+                        <div class="search_dates">
+                            <div class="search_departure_date">
+                                <label for="search_departure_date">Departure date</label>
+                                <input type="date" id="search_departure_date" name="search_departure_date">
+                            </div>
+                            <div class="search_arrival_date">
+                                <label for="search_arrival_date">Arrival date</label>
+                                <input type="date" id="search_arrival_date" name="search_arrival_date">
+                            </div>
+                        </div>
+                        <div class="submit_button">
+                            <button type="button" id="search">SEARCH</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <section class="search_result">
+                <h2>Destiny information</h2>
+                <form>
+                    <div class="result_local_dates">
+                        <div class="result_destiny">
+                            <label for="destiny_result">Destiny</label>
+                            <select name="destiny_result" id="destiny_result">
+                            </select>
+                            <figure>
+                                <img id="destination_image" alt="Destination image" src="/travel_blog/figuras/estancia-harberton.jpg">
+                            </figure>
+                        </div>
+                        <div class="result_dates">
+                            <div class="result_departure_date">
+                                <label for="departure_date_result">Departure date</label>
+                                <input readonly type="date" id="departure_date_result" name="departure_date_result" value="2022-10-02">
+                            </div>
+                            <div class="result_arrival_date">
+                                <label for="arrival_date_result">Arrival date</label>
+                                <input readonly type="date" id="arrival_date_result" name="arrival_date_result" value="2022-10-15">
+                            </div>
+                        </div>
+                        <div class="result_info_travel">
+                            <p>Travel time: 15 days</p>
+                            <label for="weather_period_result">Weather in the period</label>
+                            <textarea readonly id="weather_period_result" name="weather_period_result"
+                                rows="3">Temperature medium: 24°C. Temperature min: 5°C (23:59:32 hr). Temprature max: 14°C (14:30:27 hr)
+                            </textarea>
+                        </div>
+                        <div class="result_buttons">
+                            <button type="submit">SAVE</button>
+                            <button type="button">CANCEL</button>
+                        </div>
+                    </div>
+                </form>
+            </section>           
+        </main>
+    </body>
+
+    <script src="/travel_app/src/client/js/app.js"></script>
+
+</html>

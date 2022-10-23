@@ -1,0 +1,322 @@
+/* 1. Styles for all devices */
+
+/* 1.1. General styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* 2. Styles for devices up to 390 pixels wide */
+
+/* 2.1. Tag elements with common style for the entire page.  */
+
+header {
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #017A9B;
+}
+
+h2 {
+    height: 6vh;
+    padding-left: 4vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #A4E4F5;
+}
+
+label{
+    font-weight: bold;
+}
+
+select {
+    height: 4vh;    
+    margin-top: 0.1vh;
+    padding-left: 1.5vw;
+}
+
+input {
+    height: 4vh;
+    margin-top: 0.1vh;
+    text-align: center;
+}
+
+input[type=text] {
+    height: 4vh;
+    padding-left: 1.5vw;
+    text-align:left;
+}
+
+button {    
+    height: 4.5vh;
+    width: 35vw;
+    border: 0;
+    border-radius: 2%;
+    font-weight: bold;
+    color: white;
+    background-color: #017A9B;
+}
+
+figure {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4%;
+}
+
+img {
+    width: 50%;
+}
+
+p {
+    font-weight: bold;    
+    padding-bottom: 1.5vh;
+}
+
+textarea {
+    height: 9vh;   
+    margin-top: 0.5vh;
+    padding: 2vh 1vh 1vh 1vh;
+    text-align: justify;
+}
+
+/* 2.2. Styles for section class "search_travel"  */
+
+.search_travel form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25vh;
+    background-color:white;
+}
+
+.search_local_dates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 95%;
+    gap: 2vh;
+}
+
+.search_destiny {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-content: center;    
+}
+
+.search_dates {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+}
+
+.search_departure_date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 46.5%;
+}
+
+.search_arrival_date {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    width: 46.5%;
+}  
+
+.submit_button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 2.3. Styles for section class "search_result"  */
+
+.search_result form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 65vh;
+    background-color: white;
+}
+
+.result_destiny {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-content: center;    
+}
+
+.result_local_dates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 95%;
+    gap: 2vh;
+}
+
+.result_dates {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;   
+    
+}
+
+.result_departure_date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.result_arrival_date {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+}
+
+.result_info_travel {
+    display: flex;
+    flex-direction: column;
+}
+
+.result_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+}
+
+/* Breakpoint for Header */
+
+@media (min-width: 391px) {
+
+    /* 2.1. Tag elements with common style for the entire page.  */
+
+    header {
+        display: flex;
+        justify-content: left;
+        padding-left: 1vw;
+        height: 10vh;    
+    }
+
+    h1 {
+        font-size: 250%;
+    }
+
+    h2 {
+       font-size: 150%;    
+       padding-left: 1vw;
+    }
+
+    label {
+        font-size: 2.5vh;    
+    }
+
+    select {
+        width: 30vw;
+    }
+
+    input[type=data] {
+        width: 14vw;
+    }
+
+    input[type=text] {
+        padding-left: 1.5vw;
+        text-align: left;
+        height: 5vh;
+        width: 30vw;
+    }
+
+    select,
+    input {
+        font-size: 2vh;
+        height: 5vh;                
+    }
+    
+    button {    
+        height: 5vh;
+        width: 10vw;
+        border-radius: 4%;
+        font-size: 2vh;
+    }
+
+    figure {
+        padding-top: 4vh;
+    }
+
+    img {
+        width: 50%;
+    }
+
+    p {
+        font-size: 2.5vh;    
+        padding-bottom: 4vh;
+    }
+
+    textarea {
+        width: 30vw;
+    }
+
+    /* 2.2. Styles for section class "search_travel"  */
+
+    .search_travel form {
+        display: flex;
+        flex-direction: column;
+        align-items:flex-start;
+        justify-content:center;
+        height: 35vh;
+        padding: 1vw;
+    }
+    
+    .search_local_dates {
+        gap: 4vh;
+    }
+
+    .search_dates {
+        width: 30vw;
+    }
+   
+    .submit_button {
+        width: 30vw;
+    }
+
+    /* 2.3. Styles for section class "search_result"  */
+
+    .search_result form {
+        display: flex;
+        flex-direction: column;
+        align-items:flex-start;
+        justify-content:center;
+        height: 85vh;
+        padding: 1vw;
+    }
+
+    .result_local_dates {
+        width: 30vw;
+        gap: 4vh;
+    }
+
+    .result_destiny {
+        width: 30vw;
+    }
+
+    .result_departure_date {
+        width: 14vw;
+    }
+
+    .result_arrival_date {
+        width: 14vw;
+    }
+   
+}    
