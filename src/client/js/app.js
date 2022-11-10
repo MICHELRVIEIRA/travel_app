@@ -1,16 +1,21 @@
-// Variables used for the class "search_destiny"
 
-var destiny;
-
-var urlGeonames;
-
-const totalResultsCount = "";    
-
-// Variable used in the fields: "Departure Date" and "Arrival Date".
+// Variables used in the fields: "Departure Date" and "Arrival Date".
 
 let today = new Date().toISOString().substring(0, 10);
 
 let arrivalDate = "";
+
+// Variables user for the class "search_result"
+
+let indexSelected;
+
+var dataAPIGeonames;
+
+var dataAPIWheaterbit;
+
+var countryName;
+
+const totalResultsCount = "";    
 
 // 1. Field "Departure Date": selection rules
 
@@ -22,13 +27,16 @@ document.getElementById("search_departure_date").setAttribute('min', today);
 
 document.getElementById("search_departure_date").setAttribute('onkeydown', "return false");
 
-/* 1.3 If the user selects the current day's date in the "Arrival date" field, 
-    and the "Departure date" field is empty, the latter will receive the value of the 
-    "Arrival date" field. */
+/* 1.3 Rules for the line below:
 
-/* 1.4. If the "Arrival date" field has a value and the "Departure date" field has no value,
-        the latter must have a value equal to or greater than the current date and less than 
-        or equal to the field "Arrival date". */
+    - If the user selects the current day's date in the "Arrival date" field, and the "Departure date" 
+    field is empty, the latter will receive the value of the "Arrival date" field.
+
+    - If the "Arrival date" field has a value and the "Departure date" field has no value, the latter 
+    must have a value equal to or greater than the current date and less than or equal to the 
+    field "Arrival date". 
+
+*/
 
 document.getElementById("search_departure_date").addEventListener('click', function() {
 
@@ -54,8 +62,10 @@ document.getElementById("search_arrival_date").setAttribute('min', today);
 
 document.getElementById("search_arrival_date").setAttribute('onkeydown', "return false");
 
-/* 2.3 The value of the "Arrival date" field will be equal to or greater than the 
-    "Departure date" field, if the latter has been filled in.*/
+/* 2.3 The value of the "Arrival date" field will be equal to or greater than the "Departure date" 
+   field, if the latter has been filled in.
+
+*/
 
 document.getElementById("search_arrival_date").addEventListener('click', function() {
 
@@ -65,106 +75,137 @@ document.getElementById("search_arrival_date").addEventListener('click', functio
     }
 });
 
+// 3 Rules for class "search_result"
 
-// Exemplo de usar o UTF-8: 
-
-// http://api.geonames.org/searchJSON?maxRows=20&username=frames&featureClass=A&featureClass=P&featureClass=L&orderby=population&
-
-// 3. Rules for class "search_result"
-
-// 3.1 TODO: disable class "search_result"
+// 3.1 TODO: disable class "search_result".
 
 document.getElementsByClassName("search_result")[0].style.visibility='hidden';
 
+// 4 Rules for button "Search"
+
+// The rules for the line bellow will be described inside the function "visiblePage".
+
 document.getElementById('search').addEventListener('click', visiblePage);
+
+// 3.10 TODO: Run the API Pixabay
+
+document.getElementById("destiny_result").addEventListener('change', function() {
+
+}, false);
+
+// TODO: Routines executed to fill in the fields of the "search_result" class.
 
 function visiblePage(){
 
-    // 3.2 Checks if the user has entered a destination
+    // Checks if the user has entered all fields.
 
     if (document.getElementById("search_destiny").value == ''){
 
         alert('Please, enter a valid destination.');
 
-    } else {
-
-        // 3.3 Mount the URL that will be passed as a parameter in the function "getDataApi"
-
-        destiny = encodeURIComponent(document.getElementById("search_destiny").value);
-
-        //// Depois de configurar o servidor, altera o username para ${process.env.userName}`
-
-        urlGeonames = `http://api.geonames.org/searchJSON?q=${destiny}&featureClass=P&featureCode=PPL&countryCode=US&maxRows=20&orderby=name&cities=cities500&username=michelrvieira`;
-
-        // 3.4 TODO: Run the API Geonames
-
-        getDataApi(urlGeonames)
-
-        .then(function(data){
+    } else if (document.getElementById("search_departure_date").value == "") {
+      
+        alert('Please, enter a departure date.');
         
-            // 3.5 Checks if the api returned any value for the typed destination
+    } else if (document.getElementById("search_arrival_date").value == "") {
+        
+        alert('Please, enter a arrival date.');
 
-            if (data.totalResultsCount == 0) {
+    } else {
+        
+        // Mount the URL that will be passed as a parameter in the function "getDataApi".
+
+        let search_destiny = encodeURIComponent(document.getElementById("search_destiny").value);
+
+        // Depois de configurar o servidor, altera o username para ${process.env.userName}`
+
+        let urlAPIGeonames = `http://api.geonames.org/searchJSON?q=${search_destiny}&featureClass=P&featureCode=PPL&countryCode=US&maxRows=20&orderby=name&cities=cities500&username=michelrvieira`;
+        
+        // TODO: Run the API Geonames.
+
+        getDataApiGeonames(urlAPIGeonames)
+
+        .then(function(dataAPIGeonames){
+        
+            // Checks if the api returned any value for the typed destination.
+
+            if (dataAPIGeonames.totalResultsCount == 0) {
 
                 alert('Destiny not found. Please, inform a valid destiny.');
 
-            } else if (data.totalResultsCount == 1) {
+            } else if (dataAPIGeonames.totalResultsCount >= 1) {
 
-                // 3.6 TODO: enable class "search_result"
-
-                document.getElementsByClassName("search_result")[0].style.visibility='visible';
-
-                // 3.7 Fill the "Destiny" field with the value returned by the api
-
-                document.getElementById("destiny_result").value = data.geonames[2].name;
-
-            } else if (data.totalResultsCount > 1) {
-
-                // 3.8 TODO: enable class "search_result"
+                // TODO: visible class "search_result".
 
                 document.getElementsByClassName("search_result")[0].style.visibility='visible';
 
-                // 3.9 Fill the "Destiny" field with the values returned by the api
+                // TODO: Fill the "Destiny" field with the values returned by the API
 
-                // TODO: creates the anchor elements of the 'option' tag
+                const selectFragment = document.createDocumentFragment();
 
-                const ulFragment = document.createDocumentFragment();
-
-                for (let i = 0; i < data.geonames.length; i++) {
+                for (let i = 0; i < dataAPIGeonames.geonames.length; i++) {
                     
                     const option = document.createElement('option');
-    
-                    option.innerHTML = `<option id="${i}" value="${data.geonames[i].name}">${data.geonames[i].name}, ${data.geonames[i].countryCode}</option>`;
 
-                    ulFragment.appendChild(option); 
+                    option.setAttribute('id', `${i}`);
+                    option.setAttribute('value', `${dataAPIGeonames.geonames[i].name}`);
+
+                    if (i == 0) {
+                        option.setAttribute('selected', "true");
+                    }
+
+                    option.textContent = `${dataAPIGeonames.geonames[i].name}, ${dataAPIGeonames.geonames[i].countryCode}`;
+
+                    selectFragment.appendChild(option); 
 
                 }
     
-                // TODO: adds the anchor elements created in the 'ul' tag
+                // TODO: adds the anchor elements created in the 'select' tag.
 
-                const ulTarget = document.querySelector('select');
+                const selectTarget = document.querySelector('select');
 
-                ulTarget.appendChild(ulFragment);
+                selectTarget.appendChild(selectFragment);
 
             }        
-        
+
+            // TODO: Run the API Pixabay - Returns by default the image of the first element of the select.
+
+            displayImage();
+            weatherForecast();
+            
         });
     
-    };
+    }
+    
+    // XXXX Fill in the "Departure Date" and "Arrival Date" fields.
+
+    document.getElementById("departure_date_result").value = document.getElementById("search_departure_date").value;
+
+    document.getElementById("arrival_date_result").value = document.getElementById("search_arrival_date").value;
    
+    // XXX TODO: Calculates the duration of the trip.
+
+    const dtDiff = Math.round(Math.abs((new Date(document.getElementById("arrival_date_result").value).getTime() - new Date(document.getElementById("departure_date_result").value).getTime()) / (1000 * 3600 * 24)));
+
+    document.getElementsByTagName('p')[0].innerHTML = `<p>Travel time: ${dtDiff} days</p>`;
+
+    
+
 };
 
-const getDataApi = async (urlGeonames)=>{
+// TODO: Run the Geonames API
 
-    const res = await fetch(urlGeonames)
+const getDataApiGeonames = async (urlAPIGeonames)=>{
+
+    const res = await fetch(urlAPIGeonames)
 
     try {
   
-        const data = await res.json();
+        dataAPIGeonames = await res.json();
         
-        console.log(data)
+        console.log(dataAPIGeonames)
         
-        return data;
+        return dataAPIGeonames;
         
     }  
     
@@ -174,3 +215,108 @@ const getDataApi = async (urlGeonames)=>{
       
     }
 }
+
+// TODO: Run the Pixabay API
+
+const getDataApiPixabay = async (urlAPIPixabay)=>{
+
+    const res = await fetch(urlAPIPixabay)
+
+    try {
+  
+        const dataAPIPixabay = await res.json();
+        
+        return dataAPIPixabay;
+        
+    }  
+    
+    catch(error) {
+      
+      console.log("error", error);
+      
+    }
+}
+
+// TODO: Run the Wheaterbit API
+
+const getDataApiWheaterbit = async (urlAPIWheaterbit)=>{
+
+    const res = await fetch(urlAPIWheaterbit)
+
+    try {
+  
+        const dataAPIWheaterbit = await res.json();
+        
+        console.log(dataAPIWheaterbit)
+        
+        return dataAPIWheaterbit;
+        
+    }  
+    
+    catch(error) {
+      
+      console.log("error", error);
+      
+    }
+}
+
+// TODO: Display the image returned by the Pixabay API
+
+function displayImage() {
+
+    let destinyPixabay = encodeURIComponent(document.getElementById("destiny_result").value.trim());
+
+    // URL of the API Pixabay
+
+    // Depois trocar o key pela variável do servidor.
+
+    let urlAPIPixabay = `https://pixabay.com/api/?key=30837430-c6d554c6141da59f50e7e82d6&q=${destinyPixabay}&lang=en&image_type=photo`;
+
+    getDataApiPixabay(urlAPIPixabay)
+
+    .then(function(dataAPIPixabay){
+
+        // If the API does not return data, display a picture of the country, where the destination is.
+
+        indexSelected = document.getElementById("destiny_result").selectedIndex;      
+
+        if (dataAPIPixabay.totalHits == 0) {
+        
+            destinyPixabay = encodeURIComponent(dataAPIGeonames.geonames[indexSelected].countryName);
+
+        } else {
+
+            destinyPixabay = encodeURIComponent(dataAPIGeonames.geonames[indexSelected].name);
+
+        }   
+
+        urlAPIPixabay = `https://pixabay.com/api/?key=30837430-c6d554c6141da59f50e7e82d6&q=${destinyPixabay}&lang=en&image_type=photo`
+
+        getDataApiPixabay(urlAPIPixabay)
+
+        .then(function(dataAPIPixabay) {
+                document.getElementById("destination_image").setAttribute('src', dataAPIPixabay.hits[0].webformatURL);     
+        })
+
+    })
+
+}
+
+// TODO: Displays the weather forecast
+
+function weatherForecast() {
+    
+    // URL of the API Wheaterbit
+
+    indexSelected = document.getElementById("destiny_result").selectedIndex;
+    
+    let lat = dataAPIGeonames.geonames[indexSelected].lat;
+    let lng = dataAPIGeonames.geonames[indexSelected].lng;
+
+    // Depois trocar o key pela variável do servidor.
+
+    urlAPIWheaterbit = `https://api.weatherbit.io/v2.0/forecast/lat=${lat}&lon=${lng}&key=76efedd64bf049ba8fc84f21cef6c4aa`;   
+
+    getDataApiWheaterbit(urlAPIWheaterbit)
+
+};
