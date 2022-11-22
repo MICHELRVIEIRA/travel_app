@@ -1,38 +1,49 @@
-// 1. Import the functions and styles used in the application.
+// 1. Samesite cookie setting
 
-// import { visiblePage } from './js/visiblePage'
-// import { displayImage } from './js/displayImage'
-// import { weatherForecast } from './js/weatherForecast'
+document.cookie = 'cookie2=value2; SameSite=None; Secure';
+
+// 2. Import the functions and styles used in the application.
+
+import { visiblePage } from './js/visiblePage'
+import { getDataApiGeonames } from './js/getDataApiGeonames'
+import { displayImage } from './js/displayImage'
+import { getDataApiPixabay } from './js/getDataApiPixabay'
+
+import { dataAPIGeonames } from './js/getDataApiGeonames.js';
+
+// // import { weatherForecast } from './js/weatherForecast'
 
 import './styles/style.scss'
 
-// 2. Export the functions used in the application.
+// 3. Export the functions used in the application.
 
-/*export {
-    visiblePage,
-    displayImage,
-    weatherForecast
-}*/
+export  {
+      visiblePage,
+      getDataApiGeonames,
+      displayImage,
+      getDataApiPixabay
+//      // weatherForecast
+}
 
-// 3. Rules for displaying the home page.
+// 4. Rules for displaying the home page.
 
-// 3.1. Variables used in the fields: "Departure Date" and "Arrival Date".
+// 4.1. Variables used in the fields: "Departure Date" and "Arrival Date".
 
 let today = new Date().toISOString().substring(0, 10);
 
 let arrivalDate = "";
 
-// 4. Field "Departure Date": selection rules
+// 5. Field "Departure Date": selection rules
 
-// 4.1 Limits the departure date to at least the date of the day.
+// 5.1. Limits the departure date to at least the date of the day.
 
 document.getElementById("search_departure_date").setAttribute('min', today);
 
-// 4.2 Disables the field for keyboard use.
+// 5.2. Disables the field for keyboard use.
 
 document.getElementById("search_departure_date").setAttribute('onkeydown', "return false");
 
-/* 4.3 Rules for the line below:
+/* 5.3. Rules for the line below:
 
     - If the user selects the current day's date in the "Arrival date" field, and the "Departure date" 
     field is empty, the latter will receive the value of the "Arrival date" field.
@@ -57,17 +68,17 @@ document.getElementById("search_departure_date").addEventListener('click', funct
     
 });
 
-// 5. Field "Arrival Date": selection rules
+// 6. Field "Arrival Date": selection rules
 
-// 5.1 Limits the departure date to at least the date of the day.
+// 6.1. Limits the departure date to at least the date of the day.
 
 document.getElementById("search_arrival_date").setAttribute('min', today);
 
-// 5.2 Disables the field for keyboard use.
+// 6.2. Disables the field for keyboard use.
 
 document.getElementById("search_arrival_date").setAttribute('onkeydown', "return false");
 
-/* 5.3 The value of the "Arrival date" field will be equal to or greater than the "Departure date" 
+/* 6.3. The value of the "Arrival date" field will be equal to or greater than the "Departure date" 
    field, if the latter has been filled in.
 
 */
@@ -80,8 +91,49 @@ document.getElementById("search_arrival_date").addEventListener('click', functio
     }
 });
 
-// 6 Rules for class "search_result"
-
-// 6.1 TODO: disable class "search_result".
+// 7. TODO: Disable class "search_result".
 
 document.getElementsByClassName("search_result")[0].style.visibility='hidden';
+
+document.getElementById('destiny_result').addEventListener('change', ()=> {
+    Client.displayImage(dataAPIGeonames)
+});
+
+// 8. TODO: Actions performed by clicking on the button
+
+document.getElementById('cancel').addEventListener('click', ()=> {
+
+    // 8.1. TODO: Enable elements from class "search_travel" 
+
+    document.getElementById('search_destiny').disabled = false;
+
+    document.getElementById('search_departure_date').disabled = false;
+
+    document.getElementById('search_arrival_date').disabled = false;
+
+    document.getElementById('search').disabled = false;
+
+    // 8.2. TODO: Delete the values in tag "select"
+
+    /* <select name="destiny_result" id="destiny_result">
+                            </select> */
+
+    const selectTag = document.getElementsByTagName('select');
+
+    while (selectTag.hasChildNodes()) {
+        selectTag.removeChild(selectTag.firstChild)
+    }
+
+    // 8.3 TODO: Clears "search_result" class elements
+
+    document.getElementById('destination_image').setAttribute('src', '');
+
+    document.getElementById('departure_date_result').value = "";
+
+    document.getElementById('arrival_date_result').value = "";
+
+    document.getElementsByTagName('p').textContent = "";
+
+    document.getElementsByTagName('textarea').textContent = "";
+
+})

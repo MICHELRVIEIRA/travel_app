@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 
 app.use(express.static('dist'));
 
-const port = 3000;
+const port = 8080;
 
 const server = app.listen(port, listening)
 
@@ -60,7 +60,7 @@ app.get('/', function(req, res) {
   res.sendFile('dist/index.html')
 })
 
-app.get('/wheaterbit/forecast', (req, res) => {
+/*app.get('/wheaterbit/forecast', (req, res) => {
     request(
       { url: `https://api.weatherbit.io/v2.0/forecast/&lat=${dataWeatherbit[0].lat}&lon=${dataWeatherbit[0].lng}&key=76efedd64bf049ba8fc84f21cef6c4aa` },
         (error, response, body) => {
@@ -71,13 +71,33 @@ app.get('/wheaterbit/forecast', (req, res) => {
         res.json(JSON.parse(body));
       }
     )
-});
+});*/
 
 /* Method POST */
 
 // POST route
+/*
+app.post('/dataAPIGeonames', dataAPIGeonames);
   
-app.post('/dataAPIWeatherbit', dataAPIWeatherbit);
+function dataAPIGeonames(req,res){
+
+    
+
+    newEntry = {
+      countryCode: req.body.countryCode,
+      countryName: req.body.countryName,
+      name: req.body.name,
+      lat: req.body.lat,
+      lng: req.body.lng
+    }
+  
+    dataAPIGeonames.push(newEntry)
+    res.send(dataAPIGeonames)
+    console.log(dataAPIGeonames)
+
+}*/
+
+/*app.post('/dataAPIWeatherbit', dataAPIWeatherbit);
   
 function dataAPIWeatherbit(req,res){
    
@@ -91,4 +111,4 @@ function dataAPIWeatherbit(req,res){
     res.send(dataWeatherbit)
     console.log(dataWeatherbit)
 
-}
+}*/

@@ -35,8 +35,8 @@
                             </div>
                         </div>
                         <div class="submit_button">
-                            <button type="button" id="search">SEARCH</button>
-                        </div>
+                            <button type="button" id="search" onclick="return Client.visiblePage()">SEARCH</button>
+                        </div>                        
                     </div>
                 </form>
             </section>
@@ -49,7 +49,7 @@
                             <select name="destiny_result" id="destiny_result">
                             </select>
                             <figure>
-                                <img id="destination_image" alt="Destination image" src="/travel_blog/figuras/estancia-harberton.jpg">
+                                <img id="destination_image" alt="Destination image" src="">
                             </figure>
                         </div>
                         <div class="result_dates">
@@ -70,13 +70,21 @@
                             </textarea>
                         </div>
                         <div class="result_buttons">
-                            <button type="submit">SAVE</button>
-                            <button type="button">CANCEL</button>
+                            <button type="submit" id="save">SAVE</button>
+                            <button type="button" id="cancel">CANCEL</button>
                         </div>
                     </div>
                 </form>
             </section>           
         </main>
+        <script>
+            // Check that service workers are supported
+            if ('serviceWorker' in navigator) {
+                // Use the window load event to keep the page load performant
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/service-worker.js');
+                });
+            }
+        </script>
     </body>
-    
 </html>
