@@ -1,14 +1,14 @@
-/*
-
-Comandos importantes
-
-- npm run star: executa a aplicação;
-
-*/
+// Variables
 
 /* Empty JavaScript object to act as application API endpoint */
 
-const dataWeatherbit = [];
+let projectData = []
+
+// For using environment variables.
+
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // TODO-Express to run server and routes
 
@@ -33,6 +33,8 @@ app.use(bodyParser.json());
 const cors = require('cors');
 
 app.use(cors());
+
+// Defines the origins that can access server resources
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -60,55 +62,35 @@ app.get('/', function(req, res) {
   res.sendFile('dist/index.html')
 })
 
-/*app.get('/wheaterbit/forecast', (req, res) => {
-    request(
-      { url: `https://api.weatherbit.io/v2.0/forecast/&lat=${dataWeatherbit[0].lat}&lon=${dataWeatherbit[0].lng}&key=76efedd64bf049ba8fc84f21cef6c4aa` },
-        (error, response, body) => {
-        if (error || response.statusCode !== 200) {
-          return res.status(500).json({ type: 'error', message: err.message });
-        }
-  
-        res.json(JSON.parse(body));
+app.get('/wheaterbit/forecast', (req, res) => {
+
+  request(
+    { url: `https://api.weatherbit.io/v2.0/current?lat=${projectData[0].lat}&lon=${projectData[0].lng}&key=${process.env.keyWeatherbit}`},
+      (error, response, body) => {
+      if (error || response.statusCode !== 200) {
+        return res.status(500).json({ type: 'error', message: err.message });
       }
-    )
-});*/
+
+      res.json(JSON.parse(body));
+    }
+  )
+});
 
 /* Method POST */
 
-// POST route
-/*
-app.post('/dataAPIGeonames', dataAPIGeonames);
+app.post('/coordinates', coordinates);
   
-function dataAPIGeonames(req,res){
-
-    
-
-    newEntry = {
-      countryCode: req.body.countryCode,
-      countryName: req.body.countryName,
-      name: req.body.name,
-      lat: req.body.lat,
-      lng: req.body.lng
-    }
-  
-    dataAPIGeonames.push(newEntry)
-    res.send(dataAPIGeonames)
-    console.log(dataAPIGeonames)
-
-}*/
-
-/*app.post('/dataAPIWeatherbit', dataAPIWeatherbit);
-  
-function dataAPIWeatherbit(req,res){
+function coordinates(req,res){
    
+    projectData = []
+
     newEntry = {
-      url: req.body.url,
       lat: req.body.lat,
       lng: req.body.lng
     }
   
-    dataWeatherbit.push(newEntry)
-    res.send(dataWeatherbit)
-    console.log(dataWeatherbit)
+    projectData.push(newEntry)
+    res.send(projectData)
+    console.log(projectData)
 
-}*/
+}

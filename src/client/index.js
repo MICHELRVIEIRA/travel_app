@@ -8,6 +8,7 @@ import { visiblePage } from './js/visiblePage'
 import { getDataApiGeonames } from './js/getDataApiGeonames'
 import { displayImage } from './js/displayImage'
 import { getDataApiPixabay } from './js/getDataApiPixabay'
+import { weatherForecast } from './js/weatherForecast'
 
 import { dataAPIGeonames } from './js/getDataApiGeonames.js';
 
@@ -21,8 +22,8 @@ export  {
       visiblePage,
       getDataApiGeonames,
       displayImage,
-      getDataApiPixabay
-//      // weatherForecast
+      getDataApiPixabay,
+      weatherForecast
 }
 
 // 4. Rules for displaying the home page.
@@ -97,34 +98,40 @@ document.getElementsByClassName("search_result")[0].style.visibility='hidden';
 
 document.getElementById('destiny_result').addEventListener('change', ()=> {
     Client.displayImage(dataAPIGeonames)
+    Client.weatherForecast(dataAPIGeonames)
 });
 
 // 8. TODO: Actions performed by clicking on the button
 
-document.getElementById('cancel').addEventListener('click', ()=> {
+document.getElementById('new_search').addEventListener('click', ()=> {
 
-    // 8.1. TODO: Enable elements from class "search_travel" 
+    // 8.1. TODO: Hides class "search_result"
+
+    document.getElementsByClassName("search_result")[0].style.visibility='hidden';
+
+    // 8.2. TODO: Enable elements from class "search_travel" 
 
     document.getElementById('search_destiny').disabled = false;
 
     document.getElementById('search_departure_date').disabled = false;
 
+    document.getElementById('search_departure_date').value = "";
+
     document.getElementById('search_arrival_date').disabled = false;
+
+    document.getElementById('search_arrival_date').value = "";
 
     document.getElementById('search').disabled = false;
 
-    // 8.2. TODO: Delete the values in tag "select"
+    // 8.3. TODO: Delete the values in tag "select"
 
-    /* <select name="destiny_result" id="destiny_result">
-                            </select> */
-
-    const selectTag = document.getElementsByTagName('select');
+    const selectTag = document.getElementById('destiny_result')
 
     while (selectTag.hasChildNodes()) {
         selectTag.removeChild(selectTag.firstChild)
     }
 
-    // 8.3 TODO: Clears "search_result" class elements
+    // 8.4 TODO: Clears "search_result" class elements
 
     document.getElementById('destination_image').setAttribute('src', '');
 
@@ -132,8 +139,8 @@ document.getElementById('cancel').addEventListener('click', ()=> {
 
     document.getElementById('arrival_date_result').value = "";
 
-    document.getElementsByTagName('p').textContent = "";
+    document.getElementsByTagName('p')[0].textContent = "";
 
-    document.getElementsByTagName('textarea').textContent = "";
+    document.getElementsByTagName('textarea')[0].textContent = "";
 
 })

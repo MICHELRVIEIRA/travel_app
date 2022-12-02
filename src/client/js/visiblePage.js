@@ -26,7 +26,7 @@ function visiblePage(){
 
         // Depois de configurar o servidor, altera o username para ${process.env.userName}`
 
-        let urlAPIGeonames = `http://api.geonames.org/searchJSON?q=${search_destiny}&featureClass=P&featureCode=PPL&countryCode=US&maxRows=20&orderby=name&cities=cities500&username=michelrvieira`;
+        let urlAPIGeonames = `http://api.geonames.org/searchJSON?q=${search_destiny}&featureClass=P&featureCode=PPL&countryCode=US&maxRows=20&orderby=name&cities=cities500&username=${process.env.userName}`;
         
         // TODO: Run the API Geonames.
 
@@ -85,20 +85,8 @@ function visiblePage(){
 
             }        
 
-            // TODO: Run the API Pixabay - Returns by default the image of the first element of the select.
-
-           /*  console.log(`O país selecionado é: ${dataAPIGeonames.geonames[0].countryCode}`);
-
-            postData('/dataAPIGeonames', {countryCode: dataAPIGeonames.geonames.countryCode, 
-                                          countryName: dataAPIGeonames.geonames.countryName, 
-                                          name: dataAPIGeonames.geonames.name, 
-                                          lat: dataAPIGeonames.geonames.lat, 
-                                          lng: dataAPIGeonames.geonames.lng})
-
-            */
-
             Client.displayImage(dataAPIGeonames);
-            // weatherForecast();
+            Client.weatherForecast(dataAPIGeonames);
             
         });
     

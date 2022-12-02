@@ -1,4 +1,3 @@
-
 // 1. TODO: Display the image returned by the Pixabay API
 
 function displayImage(dataAPIGeonames) {
@@ -9,7 +8,7 @@ function displayImage(dataAPIGeonames) {
 
     // Depois trocar o key pela variável do servidor.
 
-    let urlAPIPixabay = `https://pixabay.com/api/?key=30837430-c6d554c6141da59f50e7e82d6&q=${destinyPixabay}&lang=en&image_type=photo`;
+    let urlAPIPixabay = `https://pixabay.com/api/?key=${process.env.keyPixabay}&q=${destinyPixabay}&lang=en&image_type=photo`;
 
     Client.getDataApiPixabay(urlAPIPixabay)
 
@@ -29,7 +28,7 @@ function displayImage(dataAPIGeonames) {
 
         }   
 
-        urlAPIPixabay = `https://pixabay.com/api/?key=30837430-c6d554c6141da59f50e7e82d6&q=${destinyPixabay}&lang=en&image_type=photo`
+        urlAPIPixabay = `https://pixabay.com/api/?key=${process.env.keyPixabay}&q=${destinyPixabay}&lang=en&image_type=photo`
 
         Client.getDataApiPixabay(urlAPIPixabay)
 
