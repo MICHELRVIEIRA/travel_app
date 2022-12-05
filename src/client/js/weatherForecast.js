@@ -49,10 +49,8 @@ const getData  = async () => {
     
     console.log(dataForecast);
 
-    // document.getElementById('date').innerHTML = allData[0].date;
-    // document.getElementById('temp').innerHTML = allData[0].temperature;
-    // document.getElementById('content').innerHTML = allData[0].content;
-
+    document.getElementById("weather_period_result").innerHTML = 
+      `Temperature: ${dataForecast.data[0].temp}°C.\nCode: ${dataForecast.data[0].weather.code}.\nDescription: ${dataForecast.data[0].weather.description}`;
   }
 
   catch (error){
